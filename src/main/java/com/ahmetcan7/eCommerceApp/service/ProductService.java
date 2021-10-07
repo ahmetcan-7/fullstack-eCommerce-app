@@ -68,6 +68,7 @@ public class ProductService {
             product.setPrice(updateProductRequest.getPrice());
             product.setDiscountRate(updateProductRequest.getDiscountRate());
             product.setStock(updateProductRequest.getStock());
+            productRepository.save(product);
         });
 
         return productOptional.map(productDtoConverter::convert)

@@ -1,17 +1,12 @@
 package com.ahmetcan7.eCommerceApp.service;
 
-import com.ahmetcan7.eCommerceApp.dto.CreateProductRequest;
-import com.ahmetcan7.eCommerceApp.dto.ProductDto;
-import com.ahmetcan7.eCommerceApp.dto.ProductDtoConverter;
-import com.ahmetcan7.eCommerceApp.dto.UpdateProductRequest;
+import com.ahmetcan7.eCommerceApp.dto.*;
 import com.ahmetcan7.eCommerceApp.exception.NotFoundException;
 import com.ahmetcan7.eCommerceApp.model.Brand;
 import com.ahmetcan7.eCommerceApp.model.Category;
 import com.ahmetcan7.eCommerceApp.model.Product;
 import com.ahmetcan7.eCommerceApp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
@@ -35,9 +30,10 @@ public class ProductService {
     }
 
     public ProductDto getProductById(long id){
-        return productRepository.findById(id)
-                .map(productDtoConverter::convert)
-                .orElseThrow(()->new NotFoundException("product not found"));
+        final Product product = productRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("product not found"+id));
+
+        return productDtoConverter.convert(product);
     }
 
     public ProductDto createProduct(CreateProductRequest createProductRequest){

@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -17,21 +15,25 @@ import javax.validation.constraints.Size;
 public class BaseProductRequest {
 
     @NotNull(message = "ProductName must not be null")
-    @Size(min = 3,max = 50,message = "product name size must be between {min} and {max}")
+    @Size(min = 2,max = 50,message = "product name size must be between {min} and {max}")
     private String productName;
 
     @NotNull(message = "Price must not be null")
-    @Min(0)
+    @Positive
     private double price;
 
     @Min(0)
+    @NotNull
     private int stock;
 
     @Min(0)
+    @NotNull
     private double discountRate;
 
+    @NotNull
     private Long categoryId;
 
+    @NotNull
     private Long brandId;
 
 }

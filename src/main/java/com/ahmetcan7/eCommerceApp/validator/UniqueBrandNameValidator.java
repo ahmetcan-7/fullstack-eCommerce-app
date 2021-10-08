@@ -13,7 +13,7 @@ public class UniqueBrandNameValidator implements ConstraintValidator<UniqueBrand
     }
 
     @Override
-    public boolean isValid(String BrandName, ConstraintValidatorContext context) {
-        return !brandRepository.existsByBrandName(BrandName);
+    public boolean isValid(String brandName, ConstraintValidatorContext context) {
+        return !brandRepository.existsByBrandName(brandName);
     }
 }

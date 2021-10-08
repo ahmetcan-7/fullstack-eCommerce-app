@@ -20,20 +20,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(min = 2,max = 50)
     private String productName;
-
-    @Positive
-    @NotNull
     private double price;
-
-    @Min(0)
-    @NotNull
     private int stock;
-
-    @Min(0)
-    @NotNull
     private double discountRate;
 
     @ManyToOne()

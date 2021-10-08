@@ -19,7 +19,6 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
     @Column(unique = true)
     private String brandName;
 

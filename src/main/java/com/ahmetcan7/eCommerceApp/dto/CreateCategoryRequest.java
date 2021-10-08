@@ -1,5 +1,6 @@
 package com.ahmetcan7.eCommerceApp.dto;
 
+import com.ahmetcan7.eCommerceApp.validator.UniqueCategoryName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,6 @@ import javax.validation.constraints.NotBlank;
 public class CreateCategoryRequest {
 
     @NotBlank
+    @UniqueCategoryName
     private String categoryName;
 }

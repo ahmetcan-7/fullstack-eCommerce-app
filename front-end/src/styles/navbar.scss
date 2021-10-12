@@ -1,0 +1,15 @@
+@import "./mixins";
+@import "./variables";
+
+.menu {
+  @include gradient(rgba($primary-color, 0.9), rgba($secondary-color, 0.7));
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-link {
+  color: #fff;
+}

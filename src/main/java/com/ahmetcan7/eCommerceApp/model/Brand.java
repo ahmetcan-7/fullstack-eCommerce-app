@@ -20,7 +20,6 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
     private String brandName;
 
     @OneToMany(mappedBy = "brand")

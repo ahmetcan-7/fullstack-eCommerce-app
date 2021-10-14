@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import "../styles/signup.scss"
 import { signup } from "../api/apiCalls"
+import Input from "../components/Input"
 
 function SignUp() {
   const [form, setForm] = useState({
@@ -14,10 +15,23 @@ function SignUp() {
 
   const [disabled, setDisabled] = useState(true)
 
-  const handleInput = (e) => {
+  const [errors, setErrors] = useState({})
+
+  const [passwordRepeat, setPasswordRepeat] = useState(undefined)
+
+  const handleChange = (e) => {
     const { name, value } = e.target
 
+    if (name === "passwordRepeat") {
+      if (form.password !== value) {
+        setPasswordRepeat("password dismatch")
+      } else {
+        setPasswordRepeat(undefined)
+      }
+    }
+
     setForm({ ...form, [name]: value })
+    setErrors({ ...errors, [name]: undefined })
   }
 
   const handleDisabled = () => {
@@ -38,60 +52,49 @@ function SignUp() {
     setPendingApiCall(true)
     try {
       const response = await signup(requestBody)
-    } catch (err) {}
+    } catch (err) {
+      setErrors(err.response.data)
+    }
 
     setPendingApiCall(false)
   }
+
+  const { userName, displayName, password } = errors
+
   return (
     <div className=" mt-3 signup">
       <h1 className="text-primary">Sign Up</h1>
       <form className="row g-3">
-        <div className="col-12">
-          <label htmlFor="userName" className="form-label">
-            Username
-          </label>
-          <input
-            name="userName"
-            className="form-control"
-            id="userName"
-            onChange={handleInput}
-          />
-        </div>
-        <div className="col-12">
-          <label htmlFor="displayName" className="form-label">
-            Display Name
-          </label>
-          <input
-            name="displayName"
-            className="form-control"
-            id="displayName"
-            onChange={handleInput}
-          />
-        </div>
-        <div className="col-12">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            name="password"
-            type="password"
-            className="form-control"
-            id="password"
-            onChange={handleInput}
-          />
-        </div>
-        <div className="col-12">
-          <label htmlFor="passwordRepeat" className="form-label">
-            Password Repeat
-          </label>
-          <input
-            name="passwordRepeat"
-            type="password"
-            className="form-control"
-            id="passwordRepeat"
-            onChange={handleInput}
-          />
-        </div>
+        <Input
+          id={"userName"}
+          label={"User Name"}
+          onChange={handleChange}
+          name={"userName"}
+          error={userName}
+        />
+        <Input
+          id={"displayName"}
+          label={"Display Name"}
+          onChange={handleChange}
+          name={"displayName"}
+          error={displayName}
+        />
+        <Input
+          id={"password"}
+          label={"Password"}
+          onChange={handleChange}
+          name={"password"}
+          error={password}
+          type={"password"}
+        />
+        <Input
+          id={"passwordRepeat"}
+          label={"Password Repeat"}
+          onChange={handleChange}
+          name={"passwordRepeat"}
+          error={passwordRepeat}
+          type={"password"}
+        />
         <div className="col-12">
           <div className="form-check">
             <input
@@ -113,7 +116,7 @@ function SignUp() {
             onClick={handleSubmit}
           >
             {pendingApiCall && (
-              <span class="spinner-border spinner-border-sm"></span>
+              <span className="spinner-border spinner-border-sm"></span>
             )}
             Sign Up
           </button>

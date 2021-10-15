@@ -6,6 +6,7 @@ import "./styles/_customBootstrap.scss"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
+import "./config/i18n"
 
 ReactDOM.render(
   <React.StrictMode>

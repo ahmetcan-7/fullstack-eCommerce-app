@@ -15,17 +15,17 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateUserRequest {
-    @NotNull
-    @Size(min = 3,max = 25)
-    @UniqueUserName
+    @NotNull(message = "{eCommerceApp.constraint.username.NotNull.message}")
+    @Size(min = 3,max = 25 ,message = "{eCommerceApp.constraint.username.Size.message}")
+    @UniqueUserName(message = "{eCommerceApp.constraint.username.UniqueUsername.message}")
     private String userName;
 
-    @NotNull
-    @Size(min = 3,max = 25)
+    @NotNull(message = "{eCommerceApp.constraint.username.NotNull.message}")
+    @Size(min = 3,max = 25 ,message = "{eCommerceApp.constraint.username.Size.message}")
     private String displayName;
 
-    @NotNull
-    @Size(min = 8, max=25)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
+    @NotNull(message = "{eCommerceApp.constraint.username.NotNull.message}")
+    @Size(min = 8, max=25,message = "{eCommerceApp.constraint.username.Size.message}")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",message = "{eCommerceApp.constrain.password.Pattern.message}")
     private String password;
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import "../styles/signup.scss"
 import { signup } from "../api/apiCalls"
 import Input from "../components/Input"
+import { useTranslation } from "react-i18next"
 
 function SignUp() {
   const [form, setForm] = useState({
@@ -22,13 +23,7 @@ function SignUp() {
   const handleChange = (e) => {
     const { name, value } = e.target
 
-    if (name === "passwordRepeat") {
-      if (form.password !== value) {
-        setPasswordRepeat("password dismatch")
-      } else {
-        setPasswordRepeat(undefined)
-      }
-    }
+    changePasswordRepeatValue(name, value)
 
     setForm({ ...form, [name]: value })
     setErrors({ ...errors, [name]: undefined })
@@ -59,29 +54,46 @@ function SignUp() {
     setPendingApiCall(false)
   }
 
+  const { t } = useTranslation()
   const { userName, displayName, password } = errors
+
+  const changePasswordRepeatValue = (name, value) => {
+    if (name === "passwordRepeat") {
+      if (form.password !== value) {
+        setPasswordRepeat(t("Password mismatch"))
+      } else {
+        setPasswordRepeat(undefined)
+      }
+    } else if (name === "password" && form.passwordRepeat != undefined) {
+      if (form.passwordRepeat !== value) {
+        setPasswordRepeat(t("Password mismatch"))
+      } else {
+        setPasswordRepeat(undefined)
+      }
+    }
+  }
 
   return (
     <div className=" mt-3 signup">
-      <h1 className="text-primary">Sign Up</h1>
+      <h1 className="text-primary">{t("Sign Up")}</h1>
       <form className="row g-3">
         <Input
           id={"userName"}
-          label={"User Name"}
+          label={t("Username")}
           onChange={handleChange}
           name={"userName"}
           error={userName}
         />
         <Input
           id={"displayName"}
-          label={"Display Name"}
+          label={t("Display Name")}
           onChange={handleChange}
           name={"displayName"}
           error={displayName}
         />
         <Input
           id={"password"}
-          label={"Password"}
+          label={t("Password")}
           onChange={handleChange}
           name={"password"}
           error={password}
@@ -89,7 +101,7 @@ function SignUp() {
         />
         <Input
           id={"passwordRepeat"}
-          label={"Password Repeat"}
+          label={t("Password Repeat")}
           onChange={handleChange}
           name={"passwordRepeat"}
           error={passwordRepeat}
@@ -104,7 +116,7 @@ function SignUp() {
               onClick={handleDisabled}
             />
             <label className="form-check-label" htmlFor="gridCheck">
-              Check me out
+              {t("I accept all the terms and conditions")}
             </label>
           </div>
         </div>
@@ -112,13 +124,17 @@ function SignUp() {
           <button
             type="submit"
             className="btn btn-secondary"
-            disabled={disabled || pendingApiCall}
+            disabled={
+              disabled ||
+              pendingApiCall ||
+              passwordRepeat === "password dismatch"
+            }
             onClick={handleSubmit}
           >
             {pendingApiCall && (
               <span className="spinner-border spinner-border-sm"></span>
             )}
-            Sign Up
+            {t("Sign Up")}
           </button>
         </div>
       </form>

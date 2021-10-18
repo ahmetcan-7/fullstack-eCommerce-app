@@ -1,6 +1,6 @@
 package com.ahmetcan7.eCommerceApp.dto;
 
-import com.ahmetcan7.eCommerceApp.validator.UniqueUserName;
+import com.ahmetcan7.eCommerceApp.validator.UniqueUsername;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +17,8 @@ import javax.validation.constraints.Size;
 public class CreateUserRequest {
     @NotNull(message = "{eCommerceApp.constraint.username.NotNull.message}")
     @Size(min = 3,max = 25 ,message = "{eCommerceApp.constraint.username.Size.message}")
-    @UniqueUserName(message = "{eCommerceApp.constraint.username.UniqueUsername.message}")
-    private String userName;
+    @UniqueUsername(message = "{eCommerceApp.constraint.username.UniqueUsername.message}")
+    private String username;
 
     @NotNull(message = "{eCommerceApp.constraint.username.NotNull.message}")
     @Size(min = 3,max = 25 ,message = "{eCommerceApp.constraint.username.Size.message}")

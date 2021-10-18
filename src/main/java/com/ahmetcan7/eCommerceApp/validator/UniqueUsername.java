@@ -10,10 +10,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
 @Target(FIELD)
-@Constraint(validatedBy = { UniqueUserNameValidator.class })
-public @interface UniqueUserName{
+@Constraint(validatedBy = { UniqueUsernameValidator.class })
+public @interface UniqueUsername {
 
-    String message() default "User name must be unique.";
+    String message() default "Username must be unique.";
 
     Class<?>[] groups() default {};
 

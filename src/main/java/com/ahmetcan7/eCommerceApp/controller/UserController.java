@@ -3,6 +3,7 @@ package com.ahmetcan7.eCommerceApp.controller;
 import com.ahmetcan7.eCommerceApp.dto.CreateUserRequest;
 import com.ahmetcan7.eCommerceApp.dto.UserDto;
 import com.ahmetcan7.eCommerceApp.service.UserService;
+import com.ahmetcan7.eCommerceApp.shared.GenericResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequest createUserRequest){
-        return ResponseEntity.ok(userService.createUser(createUserRequest));
+    public GenericResponse createUser(@Valid @RequestBody CreateUserRequest createUserRequest){
+        userService.createUser(createUserRequest);
+        return new GenericResponse("user created");
     }
 
     @GetMapping

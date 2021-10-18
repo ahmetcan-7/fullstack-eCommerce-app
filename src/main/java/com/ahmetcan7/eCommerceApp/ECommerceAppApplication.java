@@ -1,12 +1,14 @@
 package com.ahmetcan7.eCommerceApp;
 
 
+import com.ahmetcan7.eCommerceApp.dto.CreateUserRequest;
 import com.ahmetcan7.eCommerceApp.model.Brand;
 import com.ahmetcan7.eCommerceApp.model.Category;
 import com.ahmetcan7.eCommerceApp.model.Product;
 import com.ahmetcan7.eCommerceApp.repository.BrandRepository;
 import com.ahmetcan7.eCommerceApp.repository.CategoryRepository;
 import com.ahmetcan7.eCommerceApp.repository.ProductRepository;
+import com.ahmetcan7.eCommerceApp.service.UserService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
@@ -14,25 +16,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication()
 public class ECommerceAppApplication implements CommandLineRunner {
 
 	private final CategoryRepository categoryRepository;
 	private final BrandRepository brandRepository;
 	private final ProductRepository productRepository;
+	private final UserService userService;
 
-	public ECommerceAppApplication(CategoryRepository categoryRepository, BrandRepository brandRepository, ProductRepository productRepository) {
+	public ECommerceAppApplication(CategoryRepository categoryRepository, BrandRepository brandRepository, ProductRepository productRepository, UserService userService) {
 		this.categoryRepository = categoryRepository;
 		this.brandRepository = brandRepository;
 		this.productRepository = productRepository;
+		this.userService = userService;
 	}
 
 	public static void main(String[] args) {
@@ -115,10 +116,13 @@ public class ECommerceAppApplication implements CommandLineRunner {
 				.build();
 
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4));
+
+		CreateUserRequest createUserRequest = new CreateUserRequest();
+		createUserRequest.setUsername("user1");
+		createUserRequest.setDisplayName("display1");
+		createUserRequest.setPassword("Password123");
+
+		userService.createUser(createUserRequest);
 	}
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }

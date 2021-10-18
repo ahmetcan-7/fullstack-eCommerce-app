@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 public class UserDtoConverter {
     public UserDto convert(User user){
         return UserDto.builder()
-                .id(user.getId())
                 .displayName(user.getDisplayName())
-                .userName(user.getUserName())
-                .password(user.getPassword())
+                .username(user.getUsername())
                 .build();
     }
 }

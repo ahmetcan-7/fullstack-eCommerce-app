@@ -15,7 +15,8 @@ i18n.use(initReactI18next).init({
 				"Password Repeat": "Password Repeat",
 				"I accept all the terms and conditions":
 					"I accept all the terms and conditions",
-				Login: "Login"
+				Login: "Login",
+				Logout: "Logout"
 			}
 		},
 		tr: {
@@ -30,7 +31,8 @@ i18n.use(initReactI18next).init({
 				"Password Repeat": "Şifreyi Tekrarla",
 				"I accept all the terms and conditions":
 					"Tüm şartları ve koşulları kabul ediyorum",
-				Login: "Giriş Yap"
+				Login: "Giriş Yap",
+				Logout: "Çıkış Yap"
 			}
 		}
 	},

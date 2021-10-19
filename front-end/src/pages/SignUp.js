@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "../styles/signup.scss";
-import { signup } from "../api/apiCalls";
 import Input from "../components/Input";
 import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
+import { useDispatch } from "react-redux";
+import { signupHandler } from "../redux/actions/authActions";
 
-function SignUp() {
+function SignUp({ history }) {
 	const [form, setForm] = useState({
 		username: null,
 		displayName: null,
@@ -20,6 +21,8 @@ function SignUp() {
 	const [errors, setErrors] = useState({});
 
 	const [passwordRepeat, setPasswordRepeat] = useState(undefined);
+
+	const dispatch = useDispatch();
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -47,7 +50,8 @@ function SignUp() {
 
 		setPendingApiCall(true);
 		try {
-			const response = await signup(requestBody);
+			await dispatch(signupHandler(requestBody));
+			history.push("/");
 		} catch (err) {
 			setErrors(err.response.data);
 		}

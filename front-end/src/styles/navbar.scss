@@ -35,8 +35,12 @@
 				margin-top: 0.8rem;
 			}
 			&-login {
+				color: white;
 				margin-right: 0.8rem;
 				flex: 1;
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
 	}

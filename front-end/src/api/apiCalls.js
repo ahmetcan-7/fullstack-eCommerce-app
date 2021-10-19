@@ -11,3 +11,7 @@ export const changeValidationLanguage = language => {
 export const login = creds => {
 	return axios.post("/v1/user/auth", {}, { auth: creds });
 };
+
+export const getProducts = () => {
+	return axios.get("/v1/product");
+};

@@ -3,9 +3,17 @@ import "../styles/navbar.scss";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { changeValidationLanguage } from "../api/apiCalls";
+import SignedOut from "./SignedOut";
+import { useSelector } from "react-redux";
+import SignedIn from "./SignedIn";
+
 function Navbar() {
 	const { t, i18n } = useTranslation();
 	const [language, setLanguage] = useState("us");
+
+	const { username, isLoggedIn, displayName } = useSelector(
+		state => state.auth
+	);
 
 	const handleClick = () => {
 		if (language === "us") {
@@ -24,9 +32,9 @@ function Navbar() {
 		<div>
 			<nav className="menu navbar navbar-expand-lg  ">
 				<div className="container-md ">
-					<a href="#!" className="navbar-brand ">
+					<Link to="/" className="navbar-brand ">
 						Navbar
-					</a>
+					</Link>
 					<button
 						className="navbar-toggler"
 						type="button"
@@ -45,9 +53,9 @@ function Navbar() {
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 							<li className="nav-item">
-								<a href="#!" className="nav-link active" aria-current="page">
+								<Link to="/" className="nav-link active" aria-current="page">
 									{t("Home")}
-								</a>
+								</Link>
 							</li>
 							<li className="nav-item">
 								<a className="nav-link active" href="#!">
@@ -55,22 +63,16 @@ function Navbar() {
 								</a>
 							</li>
 						</ul>
-						<div className="navbar-right">
-							<Link to="/signup" className="navbar-right-signup">
-								{t("Sign Up")}
-							</Link>
-							<div className="navbar-right-last">
-								<Link to="/login" className="navbar-right-last-login">
-									{t("Login")}
-								</Link>
-								<img
-									src={`https://www.countryflags.io/${language}/flat/24.png`}
-									onClick={handleClick}
-									alt="flag"
-									className="flag"
-								></img>
-							</div>
-						</div>
+						{isLoggedIn ? (
+							<SignedIn
+								displayName={displayName}
+								language={language}
+								onClick={handleClick}
+								username={username}
+							/>
+						) : (
+							<SignedOut language={language} onClick={handleClick} />
+						)}
 					</div>
 				</div>
 			</nav>

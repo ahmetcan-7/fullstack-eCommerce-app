@@ -3,8 +3,10 @@ import { login } from "../api/apiCalls";
 import Input from "../components/Input";
 import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
+import { useDispatch } from "react-redux";
+import { loginHandler } from "../redux//actions/authActions";
 
-function Login() {
+function Login({ history }) {
 	const [error, setError] = useState();
 	const [form, setForm] = useState({
 		username: null,
@@ -12,6 +14,8 @@ function Login() {
 	});
 
 	const [pendingApiCall, setPendingApiCall] = useState(false);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		setError(undefined);
@@ -32,7 +36,8 @@ function Login() {
 
 		setPendingApiCall(true);
 		try {
-			const response = await login(creds);
+			await dispatch(loginHandler(creds));
+			history.push("/");
 		} catch (err) {
 			setError(err.response.data.message);
 		}

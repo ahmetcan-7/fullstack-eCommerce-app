@@ -4,10 +4,12 @@ function Flag({ language, onClick }) {
 	return (
 		<>
 			<img
-				src={`https://www.countryflags.io/${language}/flat/24.png`}
+				src={`/assets/${language}-flag.png`}
 				onClick={onClick}
 				alt="flag"
 				className="flag"
+				width="32px"
+				height="20px"
 			></img>
 		</>
 	);

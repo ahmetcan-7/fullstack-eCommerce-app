@@ -7,9 +7,13 @@ import com.ahmetcan7.eCommerceApp.model.Category;
 import com.ahmetcan7.eCommerceApp.model.Product;
 import com.ahmetcan7.eCommerceApp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,8 +27,8 @@ public class ProductService {
     private final CategoryService categoryService;
     private final BrandService brandService;
 
-    public List<ProductDto> getAllProductsDto(){
-        List<Product> productList =productRepository.findAll();
+    public List<ProductDto> getAllProducts(){
+        List<Product> productList = (List<Product>) productRepository.findAll();
 
         return productList.stream().map(productDtoConverter::convert).collect(Collectors.toList());
     }
@@ -87,4 +91,10 @@ public class ProductService {
         return product.getPrice() - discountAmount;
     }
 
+    public Page<ProductDto> getAllProducts(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize,Sort.by(sortBy));
+        Page<Product> pagedResult = productRepository.findAll(pageable);
+
+        return  pagedResult.map(productDtoConverter::convert);
+    }
 }

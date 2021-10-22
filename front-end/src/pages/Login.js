@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { login } from "../api/apiCalls";
 import Input from "../components/Input";
 import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";

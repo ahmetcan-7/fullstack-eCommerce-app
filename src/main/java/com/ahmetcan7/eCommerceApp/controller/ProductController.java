@@ -3,8 +3,10 @@ package com.ahmetcan7.eCommerceApp.controller;
 import com.ahmetcan7.eCommerceApp.dto.CreateProductRequest;
 import com.ahmetcan7.eCommerceApp.dto.ProductDto;
 import com.ahmetcan7.eCommerceApp.dto.UpdateProductRequest;
+import com.ahmetcan7.eCommerceApp.model.Product;
 import com.ahmetcan7.eCommerceApp.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllProducts(){
-        return ResponseEntity.ok(productService.getAllProductsDto());
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @GetMapping("/{id}")
@@ -27,6 +29,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
+    @GetMapping("/getAllByPage")
+    public ResponseEntity<Page<ProductDto>> getAllProducts(@RequestParam Integer pageNo, @RequestParam Integer pageSize,
+                                                           @RequestParam String sortBy){
+
+    Page<ProductDto> productList = productService.getAllProducts(pageNo-1,pageSize,sortBy);
+    return ResponseEntity.ok(productList);
+    }
     @PostMapping
     public ResponseEntity<?> createProduct(@Valid @RequestBody CreateProductRequest createProductRequest){
         return ResponseEntity.ok(productService.createProduct(createProductRequest));

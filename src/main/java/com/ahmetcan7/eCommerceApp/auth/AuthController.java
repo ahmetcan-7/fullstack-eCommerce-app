@@ -1,10 +1,10 @@
 package com.ahmetcan7.eCommerceApp.auth;
 
 
+import com.ahmetcan7.eCommerceApp.dto.UserDto;
+import com.ahmetcan7.eCommerceApp.dto.UserDtoConverter;
 import com.ahmetcan7.eCommerceApp.model.User;
 import com.ahmetcan7.eCommerceApp.shared.CurrentUser;
-import com.ahmetcan7.eCommerceApp.shared.Views;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    @PostMapping
-    @JsonView(Views.Base.class)
-    ResponseEntity<?> handleAuthentication(@CurrentUser User user) {
+    private final UserDtoConverter userDtoConverter;
 
-        return ResponseEntity.ok(user);
+    @PostMapping
+    ResponseEntity<UserDto> handleAuthentication(@CurrentUser User user) {
+
+        return ResponseEntity.ok(userDtoConverter.convert(user));
     }
 
 

@@ -1,7 +1,5 @@
 package com.ahmetcan7.eCommerceApp.model;
 
-import com.ahmetcan7.eCommerceApp.shared.Views;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -24,11 +22,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonView(Views.Base.class)
     private String username;
-    @JsonView(Views.Base.class)
     private String displayName;
-    @JsonView(Views.Sensitive.class)
     private String password;
 
     @Override

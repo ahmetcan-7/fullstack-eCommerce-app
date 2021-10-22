@@ -12,6 +12,8 @@ export const login = creds => {
 	return axios.post("/v1/user/auth", {}, { auth: creds });
 };
 
-export const getProducts = () => {
-	return axios.get("/v1/product");
+export const getProducts = (pageNo, pageSize, sortBy) => {
+	return axios.get(
+		`/v1/product/getAllByPage?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}`
+	);
 };

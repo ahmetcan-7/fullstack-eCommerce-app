@@ -6,7 +6,7 @@ import SecureLS from "secure-ls";
 const secureLs = new SecureLS();
 
 const getStateFromStorage = () => {
-	const hoaxAuth = secureLs.get("auth");
+	const auth = secureLs.get("auth");
 
 	let stateInLocalStorage = {
 		isLoggedIn: false,
@@ -15,8 +15,8 @@ const getStateFromStorage = () => {
 		password: undefined
 	};
 
-	if (hoaxAuth) {
-		return hoaxAuth;
+	if (auth) {
+		return auth;
 	}
 	return stateInLocalStorage;
 };

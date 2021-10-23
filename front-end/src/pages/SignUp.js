@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { useDispatch } from "react-redux";
 import { signupHandler } from "../redux/actions/authActions";
+import { useApiProgress } from '../shared/ApiProgress';
 
 function SignUp({ history }) {
 	const [form, setForm] = useState({
@@ -14,7 +15,6 @@ function SignUp({ history }) {
 		passwordRepeat: null
 	});
 
-	const [pendingApiCall, setPendingApiCall] = useState(false);
 
 	const [disabled, setDisabled] = useState(true);
 
@@ -23,6 +23,22 @@ function SignUp({ history }) {
 	const [passwordRepeat, setPasswordRepeat] = useState(undefined);
 
 	const dispatch = useDispatch();
+
+	const controlPasswordDismatchError = (name, value) => {
+		if (name === "passwordRepeat") {
+			if (form.password !== value) {
+				setPasswordRepeat("password dismatch");
+			} else {
+				setPasswordRepeat(undefined);
+			}
+		} else if (name === "password" && form.passwordRepeat != undefined) {
+			if (form.passwordRepeat !== value) {
+				setPasswordRepeat("password dismatch");
+			} else {
+				setPasswordRepeat(undefined);
+			}
+		}
+	};
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -48,7 +64,6 @@ function SignUp({ history }) {
 			password
 		};
 
-		setPendingApiCall(true);
 		try {
 			await dispatch(signupHandler(requestBody));
 			history.push("/");
@@ -56,27 +71,15 @@ function SignUp({ history }) {
 			setErrors(err.response.data);
 		}
 
-		setPendingApiCall(false);
 	};
 
 	const { t } = useTranslation();
-	const { username, displayName, password } = errors;
 
-	const controlPasswordDismatchError = (name, value) => {
-		if (name === "passwordRepeat") {
-			if (form.password !== value) {
-				setPasswordRepeat("password dismatch");
-			} else {
-				setPasswordRepeat(undefined);
-			}
-		} else if (name === "password" && form.passwordRepeat != undefined) {
-			if (form.passwordRepeat !== value) {
-				setPasswordRepeat("password dismatch");
-			} else {
-				setPasswordRepeat(undefined);
-			}
-		}
-	};
+	const pendingApiCallSignup = useApiProgress('post', '/v1/user');
+	const pendingApiCallLogin = useApiProgress('post', '/v1/user/auth');
+	const pendingApiCall = pendingApiCallSignup || pendingApiCallLogin;
+
+	const { username, displayName, password } = errors;
 
 	return (
 		<div className=" mt-3 signup">

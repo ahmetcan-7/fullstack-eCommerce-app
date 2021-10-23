@@ -5,6 +5,7 @@ import Pagination from "../components/Pagination";
 import Product from "../components/Product";
 import { fetchProducts } from "../redux/actions/productActions";
 import "../styles/product.scss";
+import { useApiProgress } from "../shared/ApiProgress";
 
 function ProductList() {
 	const { products, pageNumber } = useSelector(state => state.product);
@@ -14,6 +15,8 @@ function ProductList() {
 	useEffect(() => {
 		dispatch(fetchProducts(pageNumber, 3, "id"));
 	}, [pageNumber]);
+
+	const pendingApiCall = useApiProgress('get', "/v1/product/getAllByPage?pageNo");
 
 	return (
 		<div className="container mydiv">
@@ -30,7 +33,7 @@ function ProductList() {
 					/>
 				))}
 			</div>
-			<Pagination />
+			<Pagination pendingApiCall={pendingApiCall} />
 		</div>
 	);
 }

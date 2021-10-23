@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentButton, changePageNumber } from "../redux/actions/productActions";
 
-function PageItem({ page }) {
+function PageItem({ page, pendingApiCall }) {
 	const { currentButton } = useSelector(state => state.product);
 	const dispatch = useDispatch();
 
@@ -13,15 +13,18 @@ function PageItem({ page }) {
 
 	return (
 		<>
-			<li className={currentButton === page ? "page-item active" : "page-item"}>
+			<button
+				className={currentButton === page ? "page-item active" : "page-item"}
+				style={{ border: "none", padding: "0px", margin: "0px" }}
+				disabled={(currentButton === page) || pendingApiCall}
+				onClick={handleClick}>
 				<span
 					className="page-link"
-					onClick={handleClick}
 					style={{ cursor: "pointer" }}
 				>
 					{page}
 				</span>
-			</li>
+			</button>
 		</>
 	);
 }

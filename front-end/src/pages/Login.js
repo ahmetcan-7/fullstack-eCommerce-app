@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { useDispatch } from "react-redux";
 import { loginHandler } from "../redux//actions/authActions";
+import { useApiProgress } from '../shared/ApiProgress';
 
 function Login({ history }) {
 	const [error, setError] = useState();
@@ -11,8 +12,6 @@ function Login({ history }) {
 		username: null,
 		password: null
 	});
-
-	const [pendingApiCall, setPendingApiCall] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -33,7 +32,6 @@ function Login({ history }) {
 
 		setError(undefined);
 
-		setPendingApiCall(true);
 		try {
 			await dispatch(loginHandler(creds));
 			history.push("/");
@@ -41,10 +39,11 @@ function Login({ history }) {
 			setError(err.response.data.message);
 		}
 
-		setPendingApiCall(false);
 	};
 
 	const { t } = useTranslation();
+
+	const pendingApiCall = useApiProgress('post', '/v1/user/auth');
 
 	const buttonEnabled = form.username && form.password;
 

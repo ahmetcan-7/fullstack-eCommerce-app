@@ -2,17 +2,17 @@ package com.ahmetcan7.eCommerceApp.configuration;
 
 import com.ahmetcan7.eCommerceApp.model.User;
 import com.ahmetcan7.eCommerceApp.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class UserAuthService implements UserDetailsService{
 
-    private final UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

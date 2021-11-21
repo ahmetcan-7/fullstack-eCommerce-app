@@ -29,6 +29,7 @@ function ProductList() {
 						afterDiscountPrice={product.afterDiscountPrice}
 						discountRate={product.discountRate}
 						category={product.category.categoryName}
+						brand={product.brand.brandName}
 						stock={product.stock}
 					/>
 				))}

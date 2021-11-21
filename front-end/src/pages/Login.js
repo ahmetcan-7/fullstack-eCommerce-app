@@ -36,7 +36,7 @@ function Login({ history }) {
 			await dispatch(loginHandler(creds));
 			history.push("/");
 		} catch (err) {
-			setError(err.response.data.message);
+			setError(err.response.data);
 		}
 
 	};

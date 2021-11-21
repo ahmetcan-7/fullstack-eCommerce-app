@@ -3,6 +3,8 @@ package com.ahmetcan7.eCommerceApp.service;
 import com.ahmetcan7.eCommerceApp.dto.CreateUserRequest;
 import com.ahmetcan7.eCommerceApp.dto.UserDto;
 import com.ahmetcan7.eCommerceApp.dto.UserDtoConverter;
+import com.ahmetcan7.eCommerceApp.exception.NotFoundException;
+import com.ahmetcan7.eCommerceApp.model.Product;
 import com.ahmetcan7.eCommerceApp.model.User;
 import com.ahmetcan7.eCommerceApp.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,5 +40,11 @@ public class UserService {
     public List<UserDto> getAllUsers(){
         List<User> userList= userRepository.findAll();
         return userList.stream().map(userDtoConverter::convert).collect(Collectors.toList());
+    }
+
+    public void deleteUser(String username){
+        final User user=userRepository.findByUsername(username);
+
+        userRepository.deleteById(user.getId());
     }
 }

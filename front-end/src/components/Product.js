@@ -1,4 +1,5 @@
 import React from "react";
+import AddToCartButton from "./AddToCartButton";
 
 function Product({
 	productName,
@@ -6,7 +7,8 @@ function Product({
 	afterDiscountPrice,
 	discountRate,
 	category,
-	stock
+	stock,
+	brand
 }) {
 	return (
 		<div className="col-md-4">
@@ -17,7 +19,7 @@ function Product({
 						{discountRate}
 					</span>
 				</div>
-				<div className="bbb_deals_title">Today's Combo Offer</div>
+				<div className="bbb_deals_title">{brand}</div>
 				<div className="bbb_deals_slider_container">
 					<div className=" bbb_deals_item">
 						<div className="bbb_deals_image">
@@ -25,35 +27,25 @@ function Product({
 						</div>
 						<div className="bbb_deals_content">
 							<div className="bbb_deals_info_line d-flex flex-row justify-content-start">
-								<div className="bbb_deals_item_category">
+								<div className="bbb_deals_item_category w-100">
 									<a href="#!">{category}</a>
 								</div>
 								<div className="bbb_deals_item_price_a ml-auto">
-									<strike>{price}</strike>
+									<strike>{price} TL</strike>
 								</div>
 							</div>
 							<div className="bbb_deals_info_line d-flex flex-row justify-content-start">
-								<div className="bbb_deals_item_name">{productName}</div>
+								<div className="bbb_deals_item_name w-100">{productName}</div>
 								<div className="bbb_deals_item_price ml-auto">
-									{afterDiscountPrice}
+									{afterDiscountPrice} TL
 								</div>
 							</div>
 							<div className="available">
-								<div className="available_line d-flex flex-row justify-content-start">
-									<div className="available_title">
+								<div className="available_line d-flex flex-row justify-content-start align-items-center">
+									<div className="available_title w-100">
 										Available: <span>{stock}</span>
 									</div>
-									<div className="sold_stars ml-auto">
-										{" "}
-										<i className="fa fa-star"></i>{" "}
-										<i className="fa fa-star"></i>{" "}
-										<i className="fa fa-star"></i>{" "}
-										<i className="fa fa-star"></i>{" "}
-										<i className="fa fa-star"></i>{" "}
-									</div>
-								</div>
-								<div className="available_bar">
-									<span style={{ width: "17%" }}></span>
+									<AddToCartButton />
 								</div>
 							</div>
 						</div>

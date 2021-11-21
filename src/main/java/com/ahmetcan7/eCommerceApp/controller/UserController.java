@@ -28,4 +28,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @DeleteMapping("/{username}")
+    public ResponseEntity<?> deleteProduct(@PathVariable("username") String username){
+        userService.deleteUser(username);
+        return ResponseEntity.ok().build();
+    }
+
 }

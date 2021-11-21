@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap");
+@import "./variables";
 
 .mydiv {
 	margin-top: 50px;
@@ -136,19 +137,20 @@ div {
 }
 
 .bbb_deals_item_category a {
-	font-size: 14px;
+	font-size: 18px;
 	font-weight: 400;
-	color: rgba(0, 0, 0, 0.5);
+	color: rgba(253, 126, 20, 0.7);
 }
 
 .bbb_deals_item_price_a {
-	font-size: 14px;
+	font-size: 20px;
 	font-weight: 400;
 	color: rgba(0, 0, 0, 0.6);
 }
 
 .bbb_deals_item_price_a strike {
-	color: red;
+	color: #6d6e73;
+	white-space: nowrap;
 }
 
 .bbb_deals_item_name {
@@ -160,7 +162,22 @@ div {
 .bbb_deals_item_price {
 	font-size: 24px;
 	font-weight: 500;
-	color: #6d6e73;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.add_cart_button {
+	padding: 0.5rem 0 0.5rem 0.5rem;
+	margin-bottom: 0.7rem;
+	&:hover {
+		cursor: pointer;
+		& svg {
+			color: $secondary-color;
+		}
+	}
+	& svg {
+		color: $primary-color;
+	}
 }
 
 .available {
